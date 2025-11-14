@@ -1,15 +1,22 @@
-<a id="readme-top"></a>
+<div align="center">
 
-![GitHub contributors](https://img.shields.io/github/contributors/NotGhoull/void-mod-manager)
-![GitHub forks](https://img.shields.io/github/forks/notghoull/void-mod-manager)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/notghoull/void-mod-manager)
+# Void Mod Manager
+
+[![License: GPLv3](https://img.shields.io/badge/licence-GPLv3-blue.svg?style=for-the-badge)](/LICENCE.md)
+[![Supported Games](https://img.shields.io/badge/supported_games-yellow.svg?style=for-the-badge)](https://github.com/void-mod-manager/providers)
+[![GitHub Commits](https://img.shields.io/github/commit-activity/m/void-mod-manager/app?label=commits&style=for-the-badge)](https://github.com/void-mod-manager/app/commits)
+[![GitHub Issues](https://img.shields.io/github/issues/void-mod-manager/app?style=for-the-badge)](https://github.com/void-mod-manager/app/issues)
+[![GitHub Contributors](https://img.shields.io/github/contributors/void-mod-manager/app?style=for-the-badge)](https://github.com/void-mod-manager/app/graphs/contributors)
+[![GitHub Forks](https://img.shields.io/github/forks/void-mod-manager/app?style=for-the-badge)](https://github.com/void-mod-manager/app/forks)
+
+</div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#overview">Overview</a>
       <ul>
         <li><a href="#key-features">Key features</a></li>
       </ul>
@@ -30,7 +37,7 @@
   </ol>
 </details>
 
-## About The Project
+## Overview
 
 Void Mod Manager is a fast, lightweight and user-friendly tool for managing game mods. Designed for simplicity and performance, Void helps you install, update, enable and disable mods with ease. Built in Rust, Void leverages the language's safety and speed to deliver a reliable experience for gamers and modders alike.
 

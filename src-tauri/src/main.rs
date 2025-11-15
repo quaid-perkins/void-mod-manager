@@ -1,16 +1,14 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-mod traits;
-mod providers;
 mod core;
 mod binary;
 mod ui;
 
+use lib_vmm::{api::DefaultProviderApi, runtime::ContextBuilder};
 use log::{info, trace, warn};
 use tracing_log::LogTracer;
-use traits::ModProvider;
 use std::{env, sync::Arc};
 
-use crate::{core::{ContextBuilder, CoreProviderApi, DefaultDownloadService, DownloadService, ProviderSource}, providers::{ModWorkShopProvider, Payday2Provider}};
+use crate::core::{DefaultDownloadService};
 
 #[tokio::main]
 async fn main() {
@@ -37,17 +35,9 @@ async fn main() {
     let mut ctx_builder = ContextBuilder::new();
 
     let download_service = Arc::new(DefaultDownloadService::new());
-    let api = CoreProviderApi::new(download_service.clone()).into_arc();
+    let api = DefaultProviderApi::new(download_service.clone()).into_arc();
 
-    let mwsprovider = Arc::new(ModWorkShopProvider::new(api.clone()));
-    ctx_builder
-        .register_mod_provider(&mwsprovider.register(), mwsprovider, ProviderSource::Core)
-        .expect("failed to register Modworkshop provider!");
-
-    let payday_2_game_provider = Arc::new(Payday2Provider::new());
-    ctx_builder
-        .register_game_provider(payday_2_game_provider, ProviderSource::Core)
-        .expect("failed to register PAYDAY 2 game Provider!");
+    vmm_providers::register_all_providers(&mut ctx_builder, api.clone());
 
     let ctx = Arc::new(ctx_builder.freeze());
     api.set_context(Arc::clone(&ctx));

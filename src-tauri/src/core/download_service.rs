@@ -1,6 +1,7 @@
 use std::{path::PathBuf, sync::Arc};
 use async_trait::async_trait;
 use futures_util::StreamExt;
+use lib_vmm::{services::DownloadService, traits::mod_provider::ModDownloadResult};
 use log::{debug, error, info};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
@@ -10,7 +11,7 @@ use once_cell::sync::OnceCell;
 use tauri::Emitter;
 use tracing::warn;
 
-use crate::traits::ModDownloadResult;
+// use crate::traits::ModDownloadResult;
 
 #[derive(Serialize, Deserialize, Clone)]
 struct DownloadStartedPayload {
@@ -37,14 +38,6 @@ pub struct QueuedDownload {
     pub progress: Sender<ModDownloadResult>
 }
 
-#[async_trait]
-pub trait DownloadService: Send + Sync {
-    // fn new() -> Self where Self: Sized;
-    async fn queue_download(&self, url: String) -> watch::Receiver<ModDownloadResult>;
-    fn set_handle(&self, handle: AppHandle);
-
-    // async fn process_download(download: QueuedDownload) where Self: Sized;
-}
 
 pub struct DefaultDownloadService {
     queue_tx: mpsc::Sender<QueuedDownload>,
@@ -52,6 +45,18 @@ pub struct DefaultDownloadService {
 }
 
 impl DefaultDownloadService {
+    pub fn set_handle(&self, handle: AppHandle) {
+        debug!("Setting handler!");
+        let res = self.handle.set(handle);
+        // Make sure it worked
+        if res.is_err() {
+            warn!("Failed to set handler and function doesn't provide error info.");
+        } else {
+            info!("Handler set successfully, we now have access to AppHandle.");
+
+        }
+    }
+
     pub fn new() -> Self {
         let (queue_tx, mut queue_rx) = mpsc::channel::<QueuedDownload>(100);
         let handle_cell: Arc<OnceCell<AppHandle>> = Arc::new(OnceCell::new());
@@ -177,17 +182,4 @@ impl DownloadService for DefaultDownloadService {
 
         rx
     }
-
-    fn set_handle(&self, handle: AppHandle) {
-        debug!("Setting handler!");
-        let res = self.handle.set(handle);
-        // Make sure it worked
-        if res.is_err() {
-            warn!("Failed to set handler and function doesn't provide error info.");
-        } else {
-            info!("Handler set successfully, we now have access to AppHandle.");
-
-        }
-    }
-
 }

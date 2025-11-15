@@ -1,8 +1,9 @@
 use std::sync::Arc;
 use tauri::{State};
 
-use crate::{core::{Context as AppContext, DefaultDownloadService, RegistryError}, traits::{DiscoveryQuery, DiscoveryResult, GameMetadata, ModDownloadResult, ModExtendedMetadata}};
-use crate::core::DownloadService;
+use lib_vmm::{registry::RegistryError, runtime::Context as AppContext, traits::{discovery::{DiscoveryQuery, DiscoveryResult, ModExtendedMetadata}, game_provider::GameMetadata, mod_provider::ModDownloadResult}};
+use crate::{core::{DefaultDownloadService}};
+
 
 #[tauri::command]
 fn greet() -> String {
@@ -72,7 +73,7 @@ async fn download_mod(state: State<'_, Arc<AppContext>>, id: String) -> Result<(
     let game_prodiver_id = state.active_game().expect("msg");
     let game_provider = state.get_game_provider(&game_prodiver_id).expect("msg");
 
-    dbg!(&path);
+    // dbg!(&path);
 
     match path {
         ModDownloadResult::Completed(ref p) => game_provider.install_mod(p).expect("msg"),

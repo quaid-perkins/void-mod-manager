@@ -1874,7 +1874,7 @@ checksum = "bbd2bcb4c963f2ddae06a2efc7e9f3591312473c50c6685e1f298068316e66fe"
 [[package]]
 name = "lib-vmm"
 version = "0.1.0"
-source = "git+https://github.com/void-mod-manager/lib-vmm?branch=main#a22636449a0dab2321920bb3aca2d484b2644bc7"
+source = "git+https://github.com/void-modding/lib-vmm?branch=main#a22636449a0dab2321920bb3aca2d484b2644bc7"
 dependencies = [
  "async-trait",
  "reqwest",
@@ -4813,7 +4813,7 @@ checksum = "0b928f33d975fc6ad9f86c8f283853ad26bdd5b10b7f1542aa2fa15e2289105a"
 [[package]]
 name = "vmm-providers"
 version = "0.1.0"
-source = "git+https://github.com/void-mod-manager/providers?branch=main#2065f833267a6ac597cb38605faaf34803619aec"
+source = "git+https://github.com/void-modding/providers?branch=main#798618e3bced470b3107a0ec3314acdc5e799eda"
 dependencies = [
  "anyhow",
  "async-trait",

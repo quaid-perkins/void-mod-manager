@@ -41,6 +41,7 @@ async fn main() {
 
     let ctx = Arc::new(ctx_builder.freeze());
     api.set_context(Arc::clone(&ctx));
+    #[cfg(debug_assertions)]
     ctx.debug_dump();
     ui::run(ctx, download_service);
 }

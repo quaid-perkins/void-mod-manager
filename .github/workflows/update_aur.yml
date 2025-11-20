@@ -10,10 +10,19 @@ on:
 jobs:
   aur-publish:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
+      - name: Update PKGBUILD version
+        run: |
+          # Get current version
+          _commit_count=$(git rev-list --count HEAD)
+          _commit_hash=$(git rev-parse --short HEAD)
+
+          # Format string
+          new_pkgver="r${_commit_count}.${_commit_hash}"
+          sed -i "s/^pkgver=.*/pkgver=$new_pkgver/" PKGBUILD
 
       - name: Publish AUR package
         uses: KSXGitHub/github-actions-deploy-aur@v4.1.1
